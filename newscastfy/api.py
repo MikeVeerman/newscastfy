@@ -37,10 +37,7 @@ async def generate_newscastfy(request: NewscastfyRequest):
         final_audio = newscastfy.combine_audio(segments)
         
         # Save to file
-        output_dir = "output"
-        os.makedirs(output_dir, exist_ok=True)
-        output_file = os.path.join(output_dir, "newscast.mp3")
-        
+        output_file = "newscastfy_output.mp3"
         with open(output_file, "wb") as f:
             f.write(final_audio)
         
@@ -48,6 +45,5 @@ async def generate_newscastfy(request: NewscastfyRequest):
             audio_file=output_file,
             summaries=summaries
         )
-    
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e)) 

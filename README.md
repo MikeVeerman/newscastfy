@@ -1,6 +1,6 @@
-# Newscast
+# Newscastfy
 
-A Python library that transforms multiple news articles into an engaging audio newscast. Newscast takes multiple URLs, extracts the content, and creates a professional-sounding news broadcast with summaries of each article.
+A Python library that transforms multiple news articles into an engaging audio newscast. Newscastfy takes multiple URLs, extracts the content, and creates a professional-sounding news broadcast with summaries of each article.
 
 ## Features
 
@@ -32,10 +32,10 @@ Then edit `.env` with your API keys for OpenAI and ElevenLabs.
 ## Usage
 
 ```python
-from newscast import Newscast
+from newscastfy import Newscastfy
 
 # Initialize the newscast generator
-newscast = Newscast()
+newscastfy = Newscastfy()
 
 # Generate a newscast from multiple URLs
 urls = [
@@ -45,12 +45,12 @@ urls = [
 ]
 
 # Generate the newscast
-audio_file = newscast.generate(urls=urls)
+audio_file = newscastfy.generate(urls=urls)
 ```
 
 ## API Reference
 
-### Newscast Class
+### Newscastfy Class
 
 The main class for generating newscasts.
 

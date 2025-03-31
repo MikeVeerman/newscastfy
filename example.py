@@ -1,8 +1,8 @@
-from newscast import Newscast
+from newscastfy import Newscastfy
 
 def main():
     # Initialize the newscast generator
-    newscast = Newscast()
+    newscastfy = Newscastfy()
     
     # Example Wikipedia URLs (generally easier to scrape)
     urls = [
@@ -12,8 +12,8 @@ def main():
     
     try:
         # Generate the newscast
-        audio_file = newscast.generate(urls=urls)
-        print(f"Newscast generated successfully! Audio saved to: {audio_file}")
+        audio_file = newscastfy.generate(urls=urls)
+        print(f"Newscastfy generated successfully! Audio saved to: {audio_file}")
     except Exception as e:
         print(f"Error generating newscast: {str(e)}")
 
