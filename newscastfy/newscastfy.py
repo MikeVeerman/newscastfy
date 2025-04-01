@@ -12,6 +12,7 @@ from textwrap import wrap
 import io
 import time
 from pydub import AudioSegment
+from datetime import datetime
 
 # Load environment variables
 load_dotenv()
@@ -166,6 +167,25 @@ class Newscastfy:
             str: Path to the output file (audio or text)
         """
         segments_data = []
+        
+        # Create welcome message with current date
+        current_date = datetime.now().strftime("%B %d, %Y")
+        welcome_message = f"Welcome to your daily news summary for {current_date}. Here are today's top stories."
+        
+        # Generate welcome audio if not in dry run mode
+        welcome_audio = None
+        if not dry_run:
+            welcome_audio = self.text_to_speech(welcome_message)
+            print("Generated welcome audio")
+        
+        # Create welcome segment
+        welcome_segment = NewsSegment(
+            title="Welcome",
+            content=welcome_message,
+            summary=welcome_message,
+            audio=welcome_audio
+        )
+        segments_data.append(welcome_segment)
         
         for url in urls:
             try:

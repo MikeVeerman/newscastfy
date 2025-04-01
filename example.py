@@ -12,7 +12,7 @@ def main():
     
     try:
         # Generate the newscast in dry run mode (text only)
-        output_file = newscastfy.generate(urls=urls, dry_run=False)
+        output_file = newscastfy.generate(urls=urls, dry_run=True)
         print(f"Newscastfy generated successfully! Text output saved to: {output_file}")
     except Exception as e:
         print(f"Error generating newscast: {str(e)}")
