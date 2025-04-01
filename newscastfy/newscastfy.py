@@ -218,6 +218,24 @@ class Newscastfy:
         if not segments_data:
              raise Exception("No segments were successfully generated.")
 
+        # Add goodbye message
+        goodbye_message = "That's all for today's news. Thank you for listening, and we'll be back tomorrow with more stories."
+        
+        # Generate goodbye audio if not in dry run mode
+        goodbye_audio = None
+        if not dry_run:
+            goodbye_audio = self.text_to_speech(goodbye_message)
+            print("Generated goodbye audio")
+        
+        # Create goodbye segment
+        goodbye_segment = NewsSegment(
+            title="Goodbye",
+            content=goodbye_message,
+            summary=goodbye_message,
+            audio=goodbye_audio
+        )
+        segments_data.append(goodbye_segment)
+
         if dry_run:
             # Create output directory if it doesn't exist
             output_dir = "output"
