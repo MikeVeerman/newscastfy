@@ -53,6 +53,21 @@ audio_file = newscastfy.generate(urls=urls)
 text_file = newscastfy.generate(urls=urls, dry_run=True)
 ```
 
+## Running the Example
+
+The repository includes an example script (`example.py`) that demonstrates how to use Newscastfy with real articles. To run it:
+
+```bash
+python example.py
+```
+
+This example will:
+1. Process two sample articles (one from Google's blog and one from Notion)
+2. Generate a newscast with both text and audio output
+3. Save the output to a file and print its location
+
+You can modify the URLs in `example.py` to process different articles of your choice.
+
 ## API Reference
 
 ### Newscastfy Class
