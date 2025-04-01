@@ -1,17 +1,16 @@
 from newscastfy import Newscastfy
 
 def main():
-    # Initialize the newscast generator
     newscastfy = Newscastfy()
     
-    # Example Wikipedia URLs (generally easier to scrape)
+    # Two articles to put in the newscast. While we scrape publicly available websites,
+    # you could use your own contentt such as slack summaries, emails and reports.
     urls = [
-        "https://en.wikipedia.org/wiki/Artificial_intelligence",
-        "https://en.wikipedia.org/wiki/Mars"
+        "https://blog.google/technology/google-deepmind/gemini-model-thinking-updates-march-2025/",
+        "https://www.notion.com/blog/how-an-author-wrote-his-first-book-using-notion"
     ]
     
     try:
-        # Generate the newscast in dry run mode (text only)
         output_file = newscastfy.generate(urls=urls, dry_run=False)
         print(f"Newscastfy generated successfully! Text output saved to: {output_file}")
     except Exception as e:
