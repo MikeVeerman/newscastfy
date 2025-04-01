@@ -68,7 +68,7 @@ class Newscastfy:
             response = self.openai_client.chat.completions.create(
                 model="gpt-3.5-turbo",
                 messages=[
-                    {"role": "system", "content": """You are a professional news anchor. Create an engaging news segment (around 300 words) that:
+                    {"role": "system", "content": """You are a professional news anchor. Create an engaging news segment (around 250 words) that:
 1. Starts with an engaging phrase like "Our next story", "next up", "the next item" or "Moving on"
 2. Uses a conversational, engaging tone while maintaining journalistic integrity
 3. Includes key details, context, and any relevant quotes or statistics
