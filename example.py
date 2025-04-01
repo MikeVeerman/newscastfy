@@ -11,9 +11,9 @@ def main():
     ]
     
     try:
-        # Generate the newscast
-        audio_file = newscastfy.generate(urls=urls)
-        print(f"Newscastfy generated successfully! Audio saved to: {audio_file}")
+        # Generate the newscast in dry run mode (text only)
+        output_file = newscastfy.generate(urls=urls, dry_run=False)
+        print(f"Newscastfy generated successfully! Text output saved to: {output_file}")
     except Exception as e:
         print(f"Error generating newscast: {str(e)}")
 

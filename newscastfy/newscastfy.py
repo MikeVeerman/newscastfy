@@ -155,8 +155,16 @@ class Newscastfy:
         print(f"Final newscast saved to: {output_path}")
         return output_path
 
-    def generate(self, urls: List[str]) -> str:
-        """Generate a complete newscast from a list of URLs."""
+    def generate(self, urls: List[str], dry_run: bool = False) -> str:
+        """Generate a complete newscast from a list of URLs.
+        
+        Args:
+            urls: List of URLs to process
+            dry_run: If True, only generates text output without audio
+            
+        Returns:
+            str: Path to the output file (audio or text)
+        """
         segments_data = []
         
         for url in urls:
@@ -168,11 +176,12 @@ class Newscastfy:
                 
                 # Generate summary (now uses chunking)
                 summary = self.summarize(content)
-                # No need to print summary here, summarize method does it
                 
-                # Convert to speech
-                audio = self.text_to_speech(summary)
-                print(f"Generated audio length: {len(audio)} bytes")
+                # Only generate audio if not in dry run mode
+                audio = None
+                if not dry_run:
+                    audio = self.text_to_speech(summary)
+                    print(f"Generated audio length: {len(audio)} bytes")
                 
                 # Create segment data
                 segment = NewsSegment(
@@ -184,16 +193,32 @@ class Newscastfy:
                 segments_data.append(segment)
             except Exception as e:
                 print(f"Error processing URL {url}: {e}")
-                # Optionally skip this URL or handle the error differently
                 continue
         
         if not segments_data:
              raise Exception("No segments were successfully generated.")
 
-        # Combine all segments
-        print("Combining audio segments...")
-        final_audio = self.combine_audio([seg.audio for seg in segments_data if seg.audio])
-        print("Audio combination complete.")
-        
-        # Save the final audio
-        return self.save_audio(final_audio) 
+        if dry_run:
+            # Create output directory if it doesn't exist
+            output_dir = "output"
+            os.makedirs(output_dir, exist_ok=True)
+            
+            # Save text output
+            output_filename = f"newscast_{int(time.time())}.txt"
+            output_path = os.path.join(output_dir, output_filename)
+            
+            with open(output_path, "w") as f:
+                for i, segment in enumerate(segments_data, 1):
+                    f.write(f"{segment.summary}\n")
+                    f.write("\n")
+            
+            print(f"Text newscast saved to: {output_path}")
+            return output_path
+        else:
+            # Combine all segments
+            print("Combining audio segments...")
+            final_audio = self.combine_audio([seg.audio for seg in segments_data if seg.audio])
+            print("Audio combination complete.")
+            
+            # Save the final audio
+            return self.save_audio(final_audio) 

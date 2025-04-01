@@ -9,6 +9,7 @@ A Python library that transforms multiple news articles into an engaging audio n
 - Convert summaries into natural-sounding speech
 - Combine multiple segments into a cohesive newscast
 - Support for various news sources and formats
+- Dry run mode for testing text generation without audio
 
 ## Installation
 
@@ -44,8 +45,12 @@ urls = [
     "https://example.com/news3"
 ]
 
-# Generate the newscast
+# Generate the newscast with audio (default)
 audio_file = newscastfy.generate(urls=urls)
+
+# Or generate text-only output (dry run mode)
+# This is useful for testing the text generation without using ElevenLabs credits
+text_file = newscastfy.generate(urls=urls, dry_run=True)
 ```
 
 ## API Reference
@@ -56,7 +61,7 @@ The main class for generating newscasts.
 
 #### Methods
 
-- `generate(urls: List[str]) -> str`: Generates a newscast from a list of URLs
+- `generate(urls: List[str], dry_run: bool = False) -> str`: Generates a newscast from a list of URLs. When `dry_run` is True, only generates text output without audio, saving on ElevenLabs API credits.
 - `extract_content(url: str) -> str`: Extracts content from a URL
 - `summarize(content: str) -> str`: Generates a summary of the content
 - `text_to_speech(text: str) -> bytes`: Converts text to speech
