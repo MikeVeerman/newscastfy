@@ -68,11 +68,18 @@ class Newscastfy:
             response = self.openai_client.chat.completions.create(
                 model="gpt-3.5-turbo",
                 messages=[
-                    # Modified prompt to request a very short summary
-                    {"role": "system", "content": "You are a news editor. Create an extremely concise, engaging summary (around 50 words) of the following text content in a style suitable for a news broadcast."},
+                    {"role": "system", "content": """You are a professional news anchor. Create an engaging news segment (around 300 words) that:
+1. Starts with an engaging phrase like "Our next story", "next up", "the next item" or "Moving on"
+2. Uses a conversational, engaging tone while maintaining journalistic integrity
+3. Includes key details, context, and any relevant quotes or statistics
+4. Ends with a natural transition or conclusion
+5. Avoids technical jargon unless necessary
+6. Focuses on the most important aspects of the story
+
+Format the response as a complete news segment ready for broadcast."""},
                     {"role": "user", "content": first_chunk} 
                 ],
-                max_tokens=100 # Reduce max tokens as we expect a shorter output
+                max_tokens=1000  # Increased for longer summaries
             )
             summary = response.choices[0].message.content
             print(f"Chunk summarized (length: {len(summary)} chars).")
