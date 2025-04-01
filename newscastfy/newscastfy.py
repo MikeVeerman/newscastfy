@@ -133,6 +133,28 @@ class Newscastfy:
             # Catch potential pydub processing errors here
             raise Exception(f"Failed to combine audio segments using pydub (FFmpeg path: {AudioSegment.converter}): {str(e)}")
 
+    def save_audio(self, audio_data: bytes) -> str:
+        """Save the audio data to a file in the output directory.
+        
+        Args:
+            audio_data: The audio data in bytes to save
+            
+        Returns:
+            str: The path where the audio was saved
+        """
+        # Create output directory if it doesn't exist
+        output_dir = "output"
+        os.makedirs(output_dir, exist_ok=True)
+        
+        # Save to output file
+        output_filename = f"newscast_{int(time.time())}.mp3"
+        output_path = os.path.join(output_dir, output_filename)
+        
+        with open(output_path, "wb") as f:
+            f.write(audio_data)
+        print(f"Final newscast saved to: {output_path}")
+        return output_path
+
     def generate(self, urls: List[str]) -> str:
         """Generate a complete newscast from a list of URLs."""
         segments_data = []
@@ -173,15 +195,5 @@ class Newscastfy:
         final_audio = self.combine_audio([seg.audio for seg in segments_data if seg.audio])
         print("Audio combination complete.")
         
-        # Create output directory if it doesn't exist
-        output_dir = "output"
-        os.makedirs(output_dir, exist_ok=True)
-        
-        # Save to output file
-        output_filename = f"newscast_{int(time.time())}.mp3"
-        output_path = os.path.join(output_dir, output_filename)
-        
-        with open(output_path, "wb") as f:
-            f.write(final_audio)
-        print(f"Final newscast saved to: {output_path}")
-        return output_path 
+        # Save the final audio
+        return self.save_audio(final_audio) 
